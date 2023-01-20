@@ -13,15 +13,17 @@ const getAbsolutePath = (filePath) =>
 
 /* ---------Función MdLinks------ */
 const mdLinks = ( path, options) => {
+  const absolute = getAbsolutePath(path);
   return new Promise((resolve, reject) => {
     // identificar si la ruta existe
-    if (fs.existsSync(path)) {
-      resolve('the path exist');
+    if (!doesPathExist(absolute)) {
+      // eslint-disable-next-line prefer-promise-reject-errors
+      return reject(`${path}the path DOESNT exists`);
       // Revisar o convertir a ruta absoluta
     } else {
-      // si no existe la ruta la promesa se rechaza
+      // si no existe la ruta la promesa se rechaz
       // eslint-disable-next-line prefer-promise-reject-errors
-      reject('the path DOESN`T exists');
+      resolve('the path exist');
     };
   });
 };
@@ -33,3 +35,5 @@ module.exports = {
   getAbsolutePath,
   isFile,
 };
+
+
