@@ -1,5 +1,6 @@
 const {mdLinks, isFile,
   readingFiles,
+  isMarkdown,
 } = require('../index.js');
 
 
@@ -27,5 +28,10 @@ describe('isFile', () => {
 describe('readingFile', () => {
   it('shoul be a function', () => {
     expect(typeof readingFiles).toBe('function');
+  });
+});
+describe('isMarkdown', () => {
+  it('should be a function', () => {
+    expect(typeof isMarkdown).toBe('function');
   });
 });
