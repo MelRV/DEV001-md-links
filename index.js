@@ -24,6 +24,13 @@ const readingFiles = (route) => new Promise((resolve, reject) => {
   });
 });
 // obtener links
+const getLinks = (document) => {
+  return new Promise((resolve, reject) => {
+    const regEx = /\[([^\[]+)\]/g;
+    const resultado = [...document.matchAll(regEx)];
+    console.log(resultado);
+  });
+};
 /* ---------Función MdLinks------ */
 const mdLinks = ( path, options) => {
   return new Promise((resolve, reject) => {
@@ -41,18 +48,22 @@ const mdLinks = ( path, options) => {
       if (isMarkdown(absolute)) {
         console.log('este archivo es .md');
       } else {
-        console.log('esto no es un archivo .md');
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject('esto no es un archivo .md'); // reject error cuando
       }
       // se resuelve la promesa de readingFiles
       readingFiles('./README.md').then((res) => {
-        resolve(res);
+        (res);
+      });
+      getLinks('./README.md').then((resultado) => {
+        (resultado);
       });
     };
   });
 };
 // se recuelve la promesa de mdLinks
 mdLinks('./README.md').then((respuesta) => {
-  (respuesta);
+  resolve(respuesta);
 });
 module.exports = {
   mdLinks,
@@ -61,4 +72,5 @@ module.exports = {
   getAbsolutePath,
   isFile,
   readingFiles,
+  getLinks,
 };

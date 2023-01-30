@@ -5,9 +5,6 @@ const {mdLinks, isFile,
 
 
 describe('mdLinks', () => {
-  it('should...', () => {
-    console.log('FIX ME!');
-  });
   /* it('should return a promise', () => {
     expect(mdLinks('./README.md')).toBe(typeof Promise);
   }); */
