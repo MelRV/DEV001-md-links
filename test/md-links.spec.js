@@ -1,6 +1,7 @@
 const {mdLinks, isFile,
   readingFiles,
   isMarkdown,
+  getLinks,
 } = require('../index.js');
 
 
@@ -23,12 +24,17 @@ describe('isFile', () => {
   });
 });
 describe('readingFile', () => {
-  it('shoul be a function', () => {
+  it('should be a function', () => {
     expect(typeof readingFiles).toBe('function');
   });
 });
 describe('isMarkdown', () => {
   it('should be a function', () => {
     expect(typeof isMarkdown).toBe('function');
+  });
+});
+describe('getLinks', () => {
+  it('should be a function', () => {
+    expect(typeof getLinks).toBe('function');
   });
 });

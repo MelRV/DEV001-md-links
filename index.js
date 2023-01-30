@@ -13,6 +13,7 @@ const getAbsolutePath = (filePath) =>
 
 // leer la ruta y pasarla a utf8 para que se pueda leer
 // const route = './node.txt'
+/* --------- Leer el archivo ------ */
 const readingFiles = (route) => new Promise((resolve, reject) => {
   fs.readFile(route, 'utf8', function(error, data) {
     if (error) {
@@ -23,14 +24,29 @@ const readingFiles = (route) => new Promise((resolve, reject) => {
     }
   });
 });
-// obtener links
+/* --------- obtener links ------ */
 const getLinks = (document) => {
   return new Promise((resolve, reject) => {
-    const regEx = /\[([^\[]+)\]/g;
-    const resultado = [...document.matchAll(regEx)];
-    console.log(resultado);
+    const allLinks = [];
+    readingFiles(document).then((file) => {
+      const regEx = /\[(.*)\]\(((?:\/|https?:\/\/).*)\)/gi;
+      let match = regEx.exec(file);
+      while (match !== null) {
+        allLinks.push({
+          // [1] ejem es la posicion en la que quiero que retorne
+          href: match[2], // trae el https
+          text: match[1], // el texto del link
+          file: document, // de donde lo esta trayendo
+        });
+        match = regEx.exec(file);
+      };
+      console.log(allLinks);
+      resolve(allLinks);
+    })
+        .catch((error) => reject(error));
   });
 };
+/* --------- Validate ------ */
 /* ---------Función MdLinks------ */
 const mdLinks = ( path, options) => {
   return new Promise((resolve, reject) => {
@@ -63,7 +79,7 @@ const mdLinks = ( path, options) => {
 };
 // se recuelve la promesa de mdLinks
 mdLinks('./README.md').then((respuesta) => {
-  resolve(respuesta);
+  (respuesta);
 });
 module.exports = {
   mdLinks,
