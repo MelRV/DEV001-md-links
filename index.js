@@ -1,5 +1,7 @@
+const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
+
 
 // revisar si la ruta existe
 const doesPathExist = (inputPath) => fs.existsSync(inputPath);
@@ -40,13 +42,39 @@ const getLinks = (document) => {
         });
         match = regEx.exec(file);
       };
-      console.log(allLinks);
+      // console.log(allLinks);
       resolve(allLinks);
     })
         .catch((error) => reject(error));
   });
 };
 /* --------- Validate ------ */
+const validateLinks = (allLinks) => {
+  // eslint-disable-next-line arrow-parens
+  return Promise.all(allLinks.map((link => {
+    return fetch(link.href).then((result) => {
+      const data = {
+        href: link.href,
+        text: link.text,
+        file: link.file,
+        status: result.status,
+        message: (result.ok) ? 'ok' : 'fail',
+      };
+      console.log(data);
+      return data;
+    })
+        .catch((error) => {
+          const dataError = {
+            href: link.href,
+            text: link.text,
+            file: link.file,
+            status: `Fail ${error.message}`,
+            message: 'No status',
+          };
+          return dataError;
+        });
+  })));
+};
 /* ---------Función MdLinks------ */
 const mdLinks = ( path, options) => {
   return new Promise((resolve, reject) => {
@@ -72,9 +100,11 @@ const mdLinks = ( path, options) => {
         (res);
       });
       getLinks('./README.md').then((resultado) => {
-        (resultado);
+        validateLinks(resultado).then((file) => {
+          console.log(file);
+        });
       });
-    };
+    }
   });
 };
 // se recuelve la promesa de mdLinks
@@ -89,4 +119,5 @@ module.exports = {
   isFile,
   readingFiles,
   getLinks,
+  validateLinks,
 };
