@@ -60,7 +60,7 @@ const validateLinks = (allLinks) => {
         status: result.status,
         message: (result.ok) ? 'ok' : 'fail',
       };
-      console.log(data);
+      // console.log(data);
       return data;
     })
         .catch((error) => {
