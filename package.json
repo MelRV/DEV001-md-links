@@ -98,6 +98,7 @@
     "fast-levenshtein": "^2.0.6",
     "fastq": "^1.15.0",
     "fb-watchman": "^2.0.2",
+    "figlet": "^1.5.2",
     "file-entry-cache": "^6.0.1",
     "fill-range": "^7.0.1",
     "find-up": "^5.0.0",
