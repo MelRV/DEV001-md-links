@@ -75,6 +75,22 @@ const validateLinks = (allLinks) => {
         });
   })));
 };
+/* -------- Stats ------ */
+// Links totales
+const statsTotales = (links) => {
+  const totalLinks = links.length;
+  return (totalLinks);
+};
+// Links rotos
+const brokenStats = (links) => {
+  const brokenLinks = links.filter((link) => link.message === 'fail');
+  return (brokenLinks.length);
+};
+// links unicos
+const uniqueStats = (links) => {
+  const uniqueLinks = [...new Set(links.map((link) => link.href))];
+  return (uniqueLinks.length);
+};
 /* ---------Función MdLinks------ */
 const mdLinks = ( path, options) => {
   return new Promise((resolve, reject) => {
@@ -101,7 +117,7 @@ const mdLinks = ( path, options) => {
       });
       getLinks('./README.md').then((resultado) => {
         validateLinks(resultado).then((file) => {
-          console.log(file);
+          resolve(file);
         });
       });
     }
@@ -120,4 +136,7 @@ module.exports = {
   readingFiles,
   getLinks,
   validateLinks,
+  statsTotales,
+  brokenStats,
+  uniqueStats,
 };
