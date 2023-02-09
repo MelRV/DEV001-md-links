@@ -2,6 +2,8 @@ const {mdLinks, isFile,
   readingFiles,
   isMarkdown,
   getLinks,
+  getAbsolutePath,
+  validateLinks,
 } = require('../index.js');
 
 
@@ -32,9 +34,26 @@ describe('isMarkdown', () => {
   it('should be a function', () => {
     expect(typeof isMarkdown).toBe('function');
   });
+  it('md extension', () => {
+    expect(isMarkdown('./README.md')).toBe(true);
+  });
+  it('not a md extension', () => {
+    expect(isMarkdown('./node.txt')).toBe(false);
+  });
 });
 describe('getLinks', () => {
   it('should be a function', () => {
     expect(typeof getLinks).toBe('function');
   });
+});
+describe('getAbsolutePath', () => {
+  it('should be a function', () => {
+    expect(typeof getAbsolutePath).toBe('function');
+  });
+});
+describe('validateLinks', () => {
+  it('should be a function', () => {
+    expect(typeof validateLinks).toBe('function');
+  });
+  
 });

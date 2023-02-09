@@ -115,18 +115,24 @@ const mdLinks = ( path, options) => {
       readingFiles('./README.md').then((res) => {
         (res);
       });
-      getLinks('./README.md').then((resultado) => {
-        validateLinks(resultado).then((file) => {
-          resolve(file);
+      if (options.validate==true) {
+        getLinks('./README.md').then((resultado) => {
+          validateLinks(resultado).then((respuesta) => {
+            resolve(respuesta);
+          })
+              .catch((error) => {
+                console.log(error);
+              });
         });
-      });
+      } else {
+        getLinks('./README.md').then((resultado) => {
+          resolve(resultado);
+        });
+      }
     }
   });
 };
-// se recuelve la promesa de mdLinks
-mdLinks('./README.md').then((respuesta) => {
-  (respuesta);
-});
+
 module.exports = {
   mdLinks,
   isMarkdown,
